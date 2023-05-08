@@ -16,6 +16,7 @@
     "url": "https://github.com/foc-me/raku/issues"
   },
   "scripts": {
+    "watch": "node ./script/watch",
     "build": "node ./script/build",
     "build:ts": "tsc && tsc-alias",
     "build:rollup": "rollup -c",
