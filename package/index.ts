@@ -16,17 +16,3 @@ export {
     createEmitter,
     createTimeout,
 }
-
-const raku = {
-    is,
-    classname,
-    compare,
-    createCompare,
-    createCurrent,
-    createController,
-    provideEmitter,
-    createEmitter,
-    createTimeout,
-}
-
-export default raku
