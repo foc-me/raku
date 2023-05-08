@@ -1,3 +1,3 @@
-# @dc/utils  
+# @focme/utils  
 
 a javascript tools lib
