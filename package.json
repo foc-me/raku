@@ -1,5 +1,5 @@
 {
-  "name": "@dc/raku",
+  "name": "@focme/raku",
   "version": "0.0.1",
   "description": "a javascript utils lib",
   "main": "index.js",
@@ -7,11 +7,24 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ./package/**/**/*.ts"
+  },
+  "lint-staged": {
+    "./package/**/**/*.ts": [
+      "eslint --fix"
+    ]
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   },
   "devDependencies": {
     "@types/jest": "^29.5.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint": "^8.40.0",
     "jest": "^29.5.0",
+    "lint-staged": "^13.2.2",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.4",
     "webpack": "^5.79.0",
