@@ -1,6 +1,6 @@
 {
   "name": "@focme/raku",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "a javascript utils lib",
   "main": "index.js",
   "author": "lss",
