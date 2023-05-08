@@ -3,10 +3,18 @@
   "version": "0.0.1",
   "description": "a javascript utils lib",
   "main": "index.js",
-  "author": "dimcroon",
+  "author": "lss",
   "license": "MIT",
   "private": true,
   "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/foc-me/raku"
+  },
+  "homepage": "http://gitlab.insgeek.cn/frontend/util",
+  "bugs": {
+    "url": "https://github.com/foc-me/raku/issues"
+  },
   "scripts": {
     "build": "node ./script/build",
     "build:ts": "tsc && tsc-alias",

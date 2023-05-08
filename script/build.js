@@ -37,15 +37,15 @@ async function copyFiles() {
         name: package.name,
         version: package.version,
         description: package.description,
-        main: "dist/index.js",
-        module: "lib/index.js",
-        files: ["dist", "lib", "package", "type", "readme.md", "package.json"],
-        types: "type/index.d.ts",
-        repository: package.repository,
+        private: package.private,
         homepage: package.homepage,
         bugs: package.bugs,
         author: package.author,
-        license: package.license
+        license: package.license,
+        main: "dist/index.js",
+        module: "lib/index.js",
+        files: ["dist", "lib", "package", "type", "readme.md", "package.json"],
+        types: "type/index.d.ts"
     })
     await fs.writeFileSync(path.join(dist, "/package.json"), newPackage)
   }
