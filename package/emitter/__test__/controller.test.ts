@@ -1,4 +1,4 @@
-import useController, { EventType } from "../src/controller";
+import createController, { EventType } from "../src/createController";
 
 const result = { current: 0 }
 const callbacks = [
@@ -6,7 +6,7 @@ const callbacks = [
     () => { result.current += 2 },
     () => { result.current += 3 }
 ]
-const controller = useController()
+const controller = createController()
 
 beforeEach(() => {
     controller.clear()

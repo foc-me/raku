@@ -1,3 +1,5 @@
-import useEmitter from "./src/emitter";
+import createController from "./src/createController"
+import provideEmitter from "./src/provideEmitter"
+import createEmitter from "./src/createEmitter"
 
-export default useEmitter
+export { createController, provideEmitter, createEmitter }

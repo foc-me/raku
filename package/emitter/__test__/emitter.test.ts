@@ -1,10 +1,11 @@
-import { createEmitter, useEmitter } from "../src/emitter";
+import provideEmitter from "../src/provideEmitter";
+import createEmitter from "../src/createEmitter";
 
-const emitter = createEmitter()
+const emitter = provideEmitter()
 const result = { current: 0 }
 
 beforeEach(() => {
-    const { clear } = useEmitter(emitter)
+    const { clear } = createEmitter(emitter)
     clear()
     result.current = 0
 })
@@ -16,7 +17,7 @@ describe("add a emit event", () => {
             () => { result.current += 2 },
             () => { result.current += 3 }
         ]
-        const { on, emit, clear } = useEmitter(emitter)
+        const { on, emit, clear } = createEmitter(emitter)
         on("plus", ...plusEvents)
         emit("plus")
         expect(result.current).toBe(6)
@@ -35,7 +36,7 @@ describe("add a emit event", () => {
                 result.current += num
             })
         }
-        const { on, emit, clear } = useEmitter(emitter)
+        const { on, emit, clear } = createEmitter(emitter)
         on("plus", plus)
         emit("plus", 12)
         expect(result.current).toBe(12)
@@ -62,7 +63,7 @@ describe("add a emit event", () => {
                     break
             }
         }
-        const { on, emit, clear } = useEmitter(emitter)
+        const { on, emit, clear } = createEmitter(emitter)
         on(["plus", "subtract"], event)
         emit("plus", { type: "plus", nums: [1, 2, 3] })
         expect(result.current).toBe(6)
@@ -85,7 +86,7 @@ describe("add a emit event", () => {
         expect(result.current).toBe(0)
     })
     it("test once", () => {
-        const { once, emit } = useEmitter(emitter)
+        const { once, emit } = createEmitter(emitter)
         const event = (...nums: number[]) => {
             nums.forEach(num => {
                 result.current += num
