@@ -60,7 +60,7 @@ async function copyFiles() {
         name: package.name,
         version: package.version,
         description: package.description,
-        private: package.private,
+        private: false,
         homepage: package.homepage,
         bugs: package.bugs,
         author: package.author,
