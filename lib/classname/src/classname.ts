@@ -1,4 +1,4 @@
-import is from "package/is/src/is"
+import is from "lib/is/src/is"
 
 function classname(...classes: any[]): string {
     const result: string[] = classes.reduce((result, current) => {

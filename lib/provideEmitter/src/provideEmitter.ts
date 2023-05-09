@@ -1,5 +1,5 @@
-import createTimeout from "package/timeout/src/createTimeout"
-import createController, { CreateEventOption, EventCallback } from "./createController"
+import createTimeout from "lib/createTimeout/src/createTimeout"
+import createController, { CreateEventOption, EventCallback } from "lib/createController/src/createController"
 
 const { createEventOption } = createController
 

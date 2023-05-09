@@ -2,7 +2,7 @@
   "name": "@focme/raku",
   "version": "1.0.0",
   "description": "a javascript utils lib",
-  "main": "index.js",
+  "main": "lib/index.js",
   "license": "MIT",
   "private": true,
   "sideEffects": false,

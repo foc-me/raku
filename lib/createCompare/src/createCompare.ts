@@ -1,5 +1,5 @@
-import compare, { CompareOperator } from "./compare"
-import createCurrent from "package/current/src/createCurrent"
+import compare, { CompareOperator } from "lib/compare/src/compare"
+import createCurrent from "lib/createCurrent/src/createCurrent"
 
 function createCompare(initial: any) {
     const [origin, setOrigin] = createCurrent(initial)
