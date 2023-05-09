@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "a javascript utils lib",
   "main": "index.js",
-  "author": "lss",
   "license": "MIT",
   "private": true,
   "sideEffects": false,
@@ -14,6 +13,10 @@
   "homepage": "http://gitlab.insgeek.cn/frontend/util",
   "bugs": {
     "url": "https://github.com/foc-me/raku/issues"
+  },
+  "author": {
+    "name": "lss",
+    "email": "lss.rp@tom.com"
   },
   "scripts": {
     "watch": "node ./script/watch",
