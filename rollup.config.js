@@ -8,9 +8,9 @@ const compillerOption = {
 }
 
 module.exports = {
-    input: "./package/index.ts",
+    input: "./lib/index.ts",
     output: [
-        { dir: "./dist/lib", format: "esm" },
+        { dir: "./dist/esm", format: "esm" },
         { dir: "./dist/dist", format: "umd", name: "raku" }
     ],
     plugins: [

@@ -1,5 +1,5 @@
-import createCompare from "package/compare/src/createCompare"
-import createCurrent from "package/current/src/createCurrent"
+import createCompare from "lib/createCompare/src/createCompare"
+import createCurrent from "lib/createCurrent/src/createCurrent"
 
 export function createTimeout() {
     const [time, setTime] = createCurrent(Date.now())

@@ -1,6 +1,6 @@
-import is from "package/is/src/is"
-import { EventCallback } from "./createController"
-import provideEmitter from "./provideEmitter"
+import is from "lib/is/src/is"
+import { EventCallback } from "lib/createController/src/createController"
+import provideEmitter from "lib/provideEmitter/src/provideEmitter"
 
 function createEmitter(emitter: ReturnType<typeof provideEmitter>) {
     const { addEvent, callEvent, removeType, removeTypeEvent, removeEvent, clearEvent } = emitter

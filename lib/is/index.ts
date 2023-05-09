@@ -1,3 +1,3 @@
 import is from "./src/is"
 
-export { is }
+export default is

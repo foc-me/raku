@@ -1,3 +1,3 @@
 import createCurrent from "./src/createCurrent"
 
-export { createCurrent }
+export default createCurrent

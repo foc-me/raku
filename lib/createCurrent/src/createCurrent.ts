@@ -1,4 +1,4 @@
-import is from "package/is/src/is"
+import is from "lib/is/src/is"
 
 export type Current<T> = { current: T }
 

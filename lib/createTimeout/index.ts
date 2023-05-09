@@ -1,3 +1,3 @@
 import { createTimeout } from "./src/createTimeout"
 
-export { createTimeout }
+export default createTimeout

@@ -1,3 +1,3 @@
 import classname from "./src/classname"
 
-export { classname }
+export default classname
