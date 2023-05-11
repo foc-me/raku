@@ -1,4 +1,4 @@
-import provideEmitter from "../src/provideEmitter";
+import provideEmitter from "../../provideEmitter/src/provideEmitter";
 import createEmitter from "../src/createEmitter";
 
 const emitter = provideEmitter()
