@@ -1,16 +1,17 @@
 import is from "lib/is/src/is"
 
 export type Current<T> = { current: T }
+export type CurrentInit<T> = T | (() => T)
+export type setCurrent<T> = (next: T | ((t: T) => T)) => void
 
-function createCurrent<T>(init: T): [Current<T>, (next: T | (() => T)) => void] {
-    const ref: Current<T> = { current: init }
-
-    const setRef = (next: T | ((t: T) => T)) => {
+function createCurrent<T>(init: CurrentInit<T>): [Current<T>, setCurrent<T>] {
+    const initResult = is.function(init) ? init() : init
+    const ref: Current<T> = { current: initResult }
+    const setRef: setCurrent<T> = (next) => {
         if (is.function(next)) {
             ref.current = next(ref.current)
         } else ref.current = next
     }
-
     return [ref, setRef]
 }
 

@@ -1,21 +1,33 @@
-import is from "./is"
 import classname from "./classname"
 import compare from "./compare"
+import copy from "./copy"
 import createCompare from "./createCompare"
-import createCurrent from "./createCurrent"
 import createController from "./createController"
-import provideEmitter from "./provideEmitter"
+import createCurrent from "./createCurrent"
 import createEmitter from "./createEmitter"
+import createFetch from "./createFetch"
 import createTimeout from "./createTimeout"
+import debounce from "./debounce"
+import is from "./is"
+import provideEmitter from "./provideEmitter"
+import provideFetch from "./provideFetch"
+import throttle from "./throttle"
+import storage from "./storage"
 
 export {
-    is,
     classname,
     compare,
+    copy,
     createCompare,
     createCurrent,
     createController,
-    provideEmitter,
     createEmitter,
+    createFetch,
     createTimeout,
+    debounce,
+    is,
+    provideEmitter,
+    provideFetch,
+    throttle,
+    storage
 }

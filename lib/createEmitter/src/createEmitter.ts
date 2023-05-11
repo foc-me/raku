@@ -1,5 +1,5 @@
+import type { EventCallback } from "lib/createController/src/createController"
 import is from "lib/is/src/is"
-import { EventCallback } from "lib/createController/src/createController"
 import provideEmitter from "lib/provideEmitter/src/provideEmitter"
 
 function createEmitter(emitter: ReturnType<typeof provideEmitter>) {
