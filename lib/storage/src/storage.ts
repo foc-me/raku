@@ -22,9 +22,12 @@ function storage(storageType: StorageType = StorageType.local) {
             return key.map(current => getItem(current))
         }
         try {
-            return JSON.parse(storage.current.getItem(key) || "")
+            const item = storage.current.getItem(key)
+            return is.string(item) ? JSON.parse(item) : undefined
         } catch (e) {
             throw e
+        } finally {
+            return undefined
         }
     }
 
