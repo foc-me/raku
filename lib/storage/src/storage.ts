@@ -25,8 +25,7 @@ function storage(storageType: StorageType = StorageType.local) {
             const item = storage.current.getItem(key)
             return is.string(item) ? JSON.parse(item) : undefined
         } catch (e) {
-            throw e
-        } finally {
+            console.error(e)
             return undefined
         }
     }
