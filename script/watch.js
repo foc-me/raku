@@ -1,7 +1,7 @@
-const { watchRollup, copyFiles } = require("./base")
+const { watchRollup } = require("./base")
 
 function runWatch() {
-    watchRollup(copyFiles)
+    watchRollup()
 }
 
 runWatch()

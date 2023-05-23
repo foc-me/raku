@@ -9,6 +9,7 @@ and check the results
 
 function runBuild() {
     const current = Date.now()
+    console.log("run tsc")
     const child = runTsc()
     child.on("exit", async (code) => {
         if (code === 2) {
