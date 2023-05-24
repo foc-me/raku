@@ -1,4 +1,4 @@
-import type { FetchResponse } from "./provideFetch.d"
+import type { FetchResponse } from "./request.d"
 
 function makeBody(response: Response): any {
     // const contentType = response.headers.get("Content-Type") || ""
