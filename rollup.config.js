@@ -19,7 +19,11 @@ module.exports = {
     ],
     watch: {
         include: ["lib/**"],
-        exclude: ["lib/**/__test__/**"],
+        exclude: [
+            "lib/**/__test__/**",
+            "lib/**/**_old.ts",
+            "lib/**/**.old.ts"
+        ],
         buildDelay: 400
     }
 }

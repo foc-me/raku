@@ -113,6 +113,7 @@
   "exclude": [
     "./node_modules/**",
     "./lib/**/__test__/**",
-    "./lib/**/*.old.ts"
+    "./lib/**/**.old.ts",
+    "./lib/**/**_old.ts"
   ]
 }
