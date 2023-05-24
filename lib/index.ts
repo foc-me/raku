@@ -6,12 +6,14 @@ import createController from "./createController"
 import createCurrent from "./createCurrent"
 import createEmitter from "./createEmitter"
 import createFetch from "./createFetch"
+import createId from "./createId"
 import createStorage from "./createStorage"
 import createTimeout from "./createTimeout"
 import debounce from "./debounce"
 import is from "./is"
 import merge from "./merge"
 import provideEmitter from "./provideEmitter"
+import random from "./random"
 import request from "./request"
 import throttle from "./throttle"
 
@@ -25,11 +27,13 @@ export {
     createController,
     createEmitter,
     createFetch,
+    createId,
     createStorage,
     createTimeout,
     debounce,
     is,
     merge,
+    random,
     request,
     provideEmitter,
     throttle
