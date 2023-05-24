@@ -1,6 +1,6 @@
 {
   "name": "@focme/raku",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "a javascript utils lib",
   "main": "lib/index.js",
   "license": "MIT",
