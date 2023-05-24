@@ -1,4 +1,4 @@
-import type { FetchOption, FetchConfig } from "./provideFetch.d"
+import type { FetchOption, FetchConfig } from "./request.d"
 import is from "lib/is/src/is"
 
 function makeUrl(url: string, param: object | undefined, option: Partial<FetchOption>): string {
@@ -36,13 +36,13 @@ function makeBody(body: undefined | object | string | BodyInit): BodyInit | unde
 function makeRequest(config: Partial<FetchConfig>, option: Partial<FetchOption>): Request {
     const {
         url = "",
+        param = undefined,
         body = undefined,
         headers = undefined,
         method = "get",
         ...others
     } = config
 
-    const param = method === "get" && !is.bodyInit(body) ? body : undefined
     const localUrl = makeUrl(url, param, option)
     const localHeaders = makeHeaders(headers, option)
     const localBody = makeBody(body)

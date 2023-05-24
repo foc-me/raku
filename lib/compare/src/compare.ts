@@ -3,7 +3,8 @@ export enum CompareOperator {
     lte = 2,
     eq = 3,
     gte = 4,
-    gt = 5
+    gt = 5,
+    sim = 6
 }
 
 function compare(current: any, operator: CompareOperator, target: any) {
@@ -13,11 +14,12 @@ function compare(current: any, operator: CompareOperator, target: any) {
         case CompareOperator.eq: return current === target
         case CompareOperator.gte: return current >= target
         case CompareOperator.gt: return current > target
+        case CompareOperator.sim: return current == target
         default: return false
     }
 }
 
-type CompareFunction = (current: any, target: any) => boolean
+export type CompareFunction = (current: any, target: any) => boolean
 
 const lt: CompareFunction = (current, target) => {
     return compare(current, CompareOperator.lt, target)
@@ -39,10 +41,15 @@ const gt: CompareFunction = (current, target) => {
     return compare(current, CompareOperator.gt, target)
 }
 
+const sim: CompareFunction = (current, target) => {
+    return compare(current, CompareOperator.sim, target)
+}
+
 compare.lt = lt
 compare.lte = lte
 compare.eq = eq
 compare.gte = gte
 compare.gt = gt
+compare.sim = sim
 
 export default compare

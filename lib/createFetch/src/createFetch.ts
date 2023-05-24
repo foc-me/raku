@@ -1,43 +1,69 @@
-import type { FetchConfig, FetchResponse } from "lib/provideFetch/src/provideFetch.d"
-import provideFetch from "lib/provideFetch/src/provideFetch"
-import is from "lib/is/src/is"
+import type { FetchConfig, FetchOption, FetchActionRequest, FetchActionResponse, FetchResponse, UseRequest, UseResponse } from "lib/request/src/request.d"
+import type { SetCurrent } from "lib/createCurrent/src/createCurrent"
+import request from "lib/request/src/request"
 
-export type FetchRequest = ReturnType<typeof provideFetch>
-export type ResponseFormatter = (response: FetchResponse) => unknown
+export enum UseType {
+    request = "request",
+    response = "request"
+}
 
-function createFetch({ request }: FetchRequest, callback?: ResponseFormatter) {
-    if (!request) throw new ReferenceError("request is not defined")
+export type UseFetchAction = (type: UseType, callback: FetchActionRequest | FetchActionResponse) => unknown
+export interface CreateFetch {
+    (option: Partial<FetchConfig>): Promise<FetchResponse>
+    useConfig: SetCurrent<Partial<FetchOption>>
+    useRequest: UseRequest
+    useResponse: UseResponse
+    use: UseFetchAction,
+    get: (url: string, param?: object, option?: object) => Promise<FetchResponse>
+    post: (url: string, body?: object, option?: object) => Promise<FetchResponse>
+    put: (url: string, body?: object, option?: object) => Promise<FetchResponse>
+    delete: (url: string, param?: object, option?: object) => Promise<FetchResponse>
+}
 
-    const localRequest: (option: Partial<FetchConfig>) => Promise<any> = (option) => {
-        return request(option).then((response) => {
-            if (is.function(callback)) return callback(response)
-            return response
-        })
+function createFetch(option: Partial<FetchOption>) {
+    const requestFunction = request.provide(option)
+
+    const useConfig: SetCurrent<Partial<FetchOption>> = (...args) => { requestFunction.useConfig(...args) }
+    const useRequest: UseRequest = (...args) => { requestFunction.useRequest(...args) }
+    const useResponse: UseResponse = (...args) => { requestFunction.useResponse(...args) }
+    const use: UseFetchAction = (type, callback) => {
+        switch (type) {
+            case UseType.request:
+                useRequest(callback as FetchActionRequest)
+                break
+            case UseType.response:
+                useResponse(callback as FetchActionResponse)
+                break
+            default: break
+        }
+    }
+    const fetch: CreateFetch = (option) => {
+        return requestFunction(option)
     }
 
-    const fetchGet = (url: string, body?: object, option?: object) => {
-        return localRequest({ url, method: "get", body, ...(option || {}) })
+    const fetchGet = (url: string, param?: object, option?: object) => {
+        return fetch({ url, method: "get", param, ...(option || {}) })
     }
-
     const fetchPost = (url: string, body?: object | BodyInit, option?: object) => {
-        return localRequest({ url, method: "post", body, ...(option || {}) })
+        return fetch({ url, method: "post", body, ...(option || {}) })
     }
-
     const fetchPut = (url: string, body?: object | BodyInit, option?: object) => {
-        return localRequest({ url, method: "put", body, ...(option || {}) })
+        return fetch({ url, method: "put", body, ...(option || {}) })
+    }
+    const fetchDelete = (url: string, param?: object, option?: object) => {
+        return fetch({ url, method: "delete", param, ...(option || {}) })
     }
 
-    const fetchDelete = (url: string, body?: object, option?: object) => {
-        return localRequest({ url, method: "delete", body, ...(option || {}) })
-    }
+    fetch.useConfig = useConfig
+    fetch.useRequest = useRequest
+    fetch.useResponse = useResponse
+    fetch.use = use
+    fetch.get = fetchGet
+    fetch.post = fetchPost
+    fetch.put = fetchPut
+    fetch.delete = fetchDelete
 
-    return {
-        get: fetchGet,
-        post: fetchPost,
-        put: fetchPut,
-        delete: fetchDelete,
-        useConfig: request.useConfig
-    }
+    return fetch
 }
 
 export default createFetch

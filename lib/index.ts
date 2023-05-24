@@ -2,17 +2,19 @@ import classname from "./classname"
 import compare from "./compare"
 import copy from "./copy"
 import createCompare from "./createCompare"
-import createController from "./createController"
 import createCurrent from "./createCurrent"
 import createEmitter from "./createEmitter"
 import createFetch from "./createFetch"
+import createId from "./createId"
+import createStorage from "./createStorage"
 import createTimeout from "./createTimeout"
 import debounce from "./debounce"
 import is from "./is"
-import provideEmitter from "./provideEmitter"
-import provideFetch from "./provideFetch"
+import merge from "./merge"
+import random from "./random"
+import request from "./request"
 import throttle from "./throttle"
-import storage from "./storage"
+
 
 export {
     classname,
@@ -20,14 +22,15 @@ export {
     copy,
     createCompare,
     createCurrent,
-    createController,
     createEmitter,
     createFetch,
+    createId,
+    createStorage,
     createTimeout,
     debounce,
     is,
-    provideEmitter,
-    provideFetch,
-    throttle,
-    storage
+    merge,
+    random,
+    request,
+    throttle
 }

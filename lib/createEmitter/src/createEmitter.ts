@@ -1,52 +1,65 @@
-import type { EventCallback } from "lib/createController/src/createController"
 import is from "lib/is/src/is"
-import provideEmitter from "lib/provideEmitter/src/provideEmitter"
+import type { EventOption } from "./createController"
+import createController, { EventType } from "./createController"
 
-function createEmitter(emitter: ReturnType<typeof provideEmitter>) {
-    const { addEvent, callEvent, removeType, removeTypeEvent, removeEvent, clearEvent } = emitter
+export type EmitterCallback = (...args: any[]) => unknown
+export type OnEmitter = (type: string, callback: EmitterCallback, option?: Partial<EventOption>) => boolean
+export type ClearEmitter = (type?: string | EmitterCallback, callback?: EmitterCallback) => boolean
 
-    const on = (type: string | string[], ...callback: EventCallback[]) => {
-        return callback.reduce((res, currentCallback) => {
-            return addEvent(type, currentCallback) && res
-        }, true)
-    }
-    const once = (type: string | string[], ...callback: EventCallback[]) => {
-        return callback.reduce((res, currentCallback) => {
-            return addEvent(type, currentCallback, { once: true }) && res
-        }, true)
-    }
-
-    const emit = (type: string | string[], ...args: any[]) => {
-        if (is.array(type)) {
-            return type.forEach(currentType => {
-                emit(currentType, ...args)
-            })
+function createEmitter() {
+    const events = new Map<string, ReturnType<typeof createController>>()
+    const getController = (type: string) => {
+        let controller = events.get(type)
+        if (!controller) {
+            controller = createController()
+            events.set(type, controller)
         }
-        return callEvent(type, ...args)
+        return controller
     }
 
-    const clear: (types?: string | string[] | EventCallback, ...callbacks: EventCallback[]) => boolean = (types, ...callbacks) => {
-        if (is.function(types)) {
-            callbacks.unshift(types)
-            types = undefined
+    const on: OnEmitter = (type, callback, option) => {
+        const controller = getController(type)
+        return controller.add(callback, option)
+    }
+    const emit = (type: string, ...args: any[]) => {
+        const controller = getController(type)
+        return controller.call(...args)
+    }
+    const clear: ClearEmitter = (type, callback) => {
+        if (is.string(type)) {
+            const controller = getController(type)
+            if (is.function(callback)) {
+                return controller.remove(callback)
+            } else {
+                controller.clear()
+                return events.delete(type)
+            }
         }
-        if (is.string(types)) {
-            if (callbacks && callbacks.length > 0) {
-                return removeTypeEvent(types, ...callbacks)
-            } else return removeType(types)
-        }
-        if (is.array(types)) {
-            return types.reduce((res, current) => {
-                return clear(current, ...callbacks) && res
+        if (is.function(type)) {
+            const result = []
+            const values = events.values()
+            let current = values.next()
+            while (!current.done) {
+                result.push(current.value.remove(type))
+                current = values.next()
+            }
+            events.clear()
+            return result.reduce((res, current) => {
+                return res && current
             }, true)
         }
-        if (callbacks && callbacks.length > 0) {
-            return removeEvent(...callbacks)
+
+        const values = events.values()
+        let current = values.next()
+        while (!current.done) {
+            current.value.clear()
+            current = values.next()
         }
-        return clearEvent()
+        events.clear()
+        return true
     }
 
-    return { on, once, emit, clear }
+    return { on, emit, clear }
 }
 
 export default createEmitter

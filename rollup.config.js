@@ -16,5 +16,14 @@ module.exports = {
     plugins: [
         typescript(compillerOption),
         uglify()
-    ]
+    ],
+    watch: {
+        include: ["lib/**"],
+        exclude: [
+            "lib/**/__test__/**",
+            "lib/**/**_old.ts",
+            "lib/**/**.old.ts"
+        ],
+        buildDelay: 400
+    }
 }

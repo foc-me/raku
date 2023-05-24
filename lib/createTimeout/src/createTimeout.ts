@@ -1,7 +1,7 @@
 import createCompare from "lib/createCompare/src/createCompare"
 import createCurrent from "lib/createCurrent/src/createCurrent"
 
-export function createTimeout() {
+function createTimeout() {
     const [time, updateTime] = createCurrent(Date.now())
 
     const checkTimeout = (delay: number) => {

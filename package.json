@@ -1,6 +1,6 @@
 {
   "name": "@focme/raku",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "a javascript utils lib",
   "main": "lib/index.js",
   "license": "MIT",
@@ -10,20 +10,16 @@
     "type": "git",
     "url": "https://github.com/foc-me/raku"
   },
-  "homepage": "http://gitlab.insgeek.cn/frontend/util",
+  "homepage": "https://github.com/foc-me/raku",
   "bugs": {
     "url": "https://github.com/foc-me/raku/issues"
   },
-  "author": {
-    "name": "lss",
-    "email": "lss.rp@tom.com"
-  },
+  "author": "focme",
   "scripts": {
     "watch": "node ./script/watch",
     "watch:rollup": "rollup -c --watch",
     "build": "node ./script/build",
     "build:ts": "tsc && tsc-alias",
-    "build:rollup": "rollup -c",
     "test": "jest",
     "test:watch": "jest --watch --no-coverage",
     "lint": "eslint ./package/**/**/*.ts"

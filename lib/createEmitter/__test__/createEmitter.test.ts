@@ -1,33 +1,30 @@
-import provideEmitter from "../../provideEmitter/src/provideEmitter";
 import createEmitter from "../src/createEmitter";
 
-const emitter = provideEmitter()
 const result = { current: 0 }
+const emitter = createEmitter()
 
 beforeEach(() => {
-    const { clear } = createEmitter(emitter)
-    clear()
+    emitter.clear()
     result.current = 0
 })
 
 describe("add a emit event", () => {
-    it("add emit plus events", () => {
+    it("add emit plus events", async () => {
         const plusEvents = [
             () => { result.current += 1 },
             () => { result.current += 2 },
             () => { result.current += 3 }
         ]
-        const { on, emit, clear } = createEmitter(emitter)
-        on("plus", ...plusEvents)
-        emit("plus")
+        plusEvents.forEach(event => { emitter.on("plus", event) })
+        await emitter.emit("plus")
         expect(result.current).toBe(6)
-        emit("plus")
+        await emitter.emit("plus")
         expect(result.current).toBe(12)
-        clear("plus")
-        emit("plus")
+        await emitter.clear("plus")
+        await emitter.emit("plus")
         expect(result.current).toBe(12)
     })
-    it("test emit event with parameters", () => {
+    it("test emit event with parameters", async () => {
         const plus = (num: number) => {
             result.current += num
         }
@@ -36,22 +33,21 @@ describe("add a emit event", () => {
                 result.current += num
             })
         }
-        const { on, emit, clear } = createEmitter(emitter)
-        on("plus", plus)
-        emit("plus", 12)
+        emitter.on("plus", plus)
+        await emitter.emit("plus", 12)
         expect(result.current).toBe(12)
-        emit("plus", -4)
+        await emitter.emit("plus", -4)
         expect(result.current).toBe(8)
-        emit("plus", 12)
+        await emitter.emit("plus", 12)
         expect(result.current).toBe(20)
-        on("plus", plusNumbers)
-        emit("plus", 1, 2, 3)
+        emitter.on("plus", plusNumbers)
+        await emitter.emit("plus", 1, 2, 3)
         expect(result.current).toBe(27)
-        clear("plus")
-        emit("plus", 1, 2, 3)
+        emitter.clear("plus")
+        await emitter.emit("plus", 1, 2, 3)
         expect(result.current).toBe(27)
     })
-    it("test one event for some emits", () => {
+    it("test one event for some emits", async () => {
         const event = (param?: { type: string, nums: number[] }) => {
             const { type, nums = [] } = param || {}
             switch (type) {
@@ -63,39 +59,26 @@ describe("add a emit event", () => {
                     break
             }
         }
-        const { on, emit, clear } = createEmitter(emitter)
-        on(["plus", "subtract"], event)
-        emit("plus", { type: "plus", nums: [1, 2, 3] })
+        ["plus", "subtract"].forEach(type => { emitter.on(type, event) })
+        
+        await emitter.emit("plus", { type: "plus", nums: [1, 2, 3] })
         expect(result.current).toBe(6)
-        emit("plus")
+        await emitter.emit("plus")
         expect(result.current).toBe(6)
-        emit("subtract", { type: "subtract", nums: [10] })
+        await emitter.emit("subtract", { type: "subtract", nums: [10] })
         expect(result.current).toBe(-4)
-        clear("plus")
-        emit("plus", { type: "plus", nums: [1, 2, 3] })
+        emitter.clear("plus")
+        await emitter.emit("plus", { type: "plus", nums: [1, 2, 3] })
         expect(result.current).toBe(-4)
-        emit("subtract", { type: "subtract", nums: [1, 2, 3] })
+        await emitter.emit("subtract", { type: "subtract", nums: [1, 2, 3] })
         expect(result.current).toBe(-10)
-        on("plus", event)
-        emit("plus", { type: "plus", nums: [4, 3, 2, 1] })
+        emitter.on("plus", event)
+        await emitter.emit("plus", { type: "plus", nums: [4, 3, 2, 1] })
         expect(result.current).toBe(0)
-        clear(event)
-        emit("subtract", { type: "subtract", nums: [1, 2, 3] })
+        emitter.clear(event)
+        await emitter.emit("subtract", { type: "subtract", nums: [1, 2, 3] })
         expect(result.current).toBe(0)
-        emit("plus", { type: "plus", nums: [4, 3, 2, 1] })
+        await emitter.emit("plus", { type: "plus", nums: [4, 3, 2, 1] })
         expect(result.current).toBe(0)
-    })
-    it("test once", () => {
-        const { once, emit } = createEmitter(emitter)
-        const event = (...nums: number[]) => {
-            nums.forEach(num => {
-                result.current += num
-            })
-        }
-        once("plus", event)
-        emit("plus", 10, 9)
-        expect(result.current).toBe(19)
-        emit("plus", 10, 9)
-        expect(result.current).toBe(19)
     })
 })
