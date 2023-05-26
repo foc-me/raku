@@ -1,9 +1,15 @@
 import type { FetchResponse } from "./request.d"
 
 function makeBody(response: Response): any {
-    // const contentType = response.headers.get("Content-Type") || ""
-    // if (/application\/json/.test(contentType)) return response.json()
-    return response.json()
+    const { body, headers } = response
+    const contentType = headers.get("Content-Type") || ""
+    if (contentType.includes("application/octet-stream")) {
+        return response.blob()
+    }
+    if (contentType.includes("application/json")) {
+        return response.json()
+    }
+    return body
 }
 
 function makeResponse(response: Response): FetchResponse {
