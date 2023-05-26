@@ -1,6 +1,6 @@
 {
   "name": "@focme/raku",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "a javascript utils lib",
   "main": "lib/index.js",
   "license": "MIT",
@@ -9,10 +9,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/foc-me/raku"
-  },
-  "homepage": "https://github.com/foc-me/raku",
-  "bugs": {
-    "url": "https://github.com/foc-me/raku/issues"
   },
   "author": "focme",
   "scripts": {
