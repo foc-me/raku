@@ -11,11 +11,15 @@ module.exports = {
   },
   "extends": ["plugin:@typescript-eslint/recommended"],
   "plugins": ["@typescript-eslint"],
-  "ignorePatterns": ["**/__test__/**"],
+  "ignorePatterns": [
+    "**/__test__/**",
+    "**/*_old.**",
+    "**/*.old.**"
+  ],
   "rules": {
     "indent": ["error", 4, { "SwitchCase": 1 }],
     "semi": ["error", "never"],
-    "eqeqeq": ["error", "smart"],
+    "eqeqeq": "off",
     "no-var": "error",
     "no-alert": "error",
     "no-console": ["error", { "allow": ["warn", "error"] }],
@@ -30,7 +34,7 @@ module.exports = {
     "no-self-compare": "error",
     "no-sequences": "error",
     "no-useless-return": "error",
-    "no-unused-vars": "off", // ["error", { "args": "after-used", "ignoreRestSiblings": true }],
+    "no-unused-vars": "off",
     "no-label-var": "error",
     "no-use-before-define": ["error", { "functions": false, "classes": false }],
     "no-lonely-if": "error",
@@ -39,7 +43,7 @@ module.exports = {
     "camelcase": ["error", { "ignoreDestructuring": true }],
     "no-tabs": ["error"],
     "no-whitespace-before-property": "error",
-    "no-duplicate-imports": "error",
+    "no-duplicate-imports": "off",
     "no-useless-computed-key": "error",
     "no-useless-constructor": "error",
     "array-bracket-newline": ["error", "consistent"],
@@ -62,7 +66,6 @@ module.exports = {
     "function-paren-newline": ["error", "multiline"],
     "generator-star-spacing": ["error", { "before": false, "after": true }],
     "implicit-arrow-linebreak": ["error", "beside"],
-    "jsx-quotes": ["error", "prefer-single"],
     "keyword-spacing": "error",
     "key-spacing": [
       "error",
@@ -87,14 +90,19 @@ module.exports = {
     "quotes": ["error", "double"],
     "rest-spread-spacing": ["error", "never"],
     "space-before-blocks": ["error", "always"],
-    "space-before-function-paren": ["error", "never"],
+    "space-before-function-paren": ["error", {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+    }],
     "space-in-parens": ["error", "never"],
     "space-infix-ops": ["error"],
-    "space-unary-ops": ["error", {"words": true, "nonwords": false}],
-    "switch-colon-spacing": ["error", {"after": true, "before": false}],
+    "space-unary-ops": ["error", { "words": true, "nonwords": false }],
+    "switch-colon-spacing": ["error", { "after": true, "before": false }],
     "template-tag-spacing": "error",
     "template-curly-spacing": "error",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-unused-vars": "error"
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-duplicate-imports": "error"
   }
 }

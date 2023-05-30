@@ -18,12 +18,10 @@
     "build:ts": "tsc && tsc-alias",
     "test": "jest",
     "test:watch": "jest --watch --no-coverage",
-    "lint": "eslint ./package/**/**/*.ts"
+    "lint": "eslint ./lib/**/**/*.ts"
   },
   "lint-staged": {
-    "./package/**/**/*.ts": [
-      "eslint --fix"
-    ]
+    "./lib/**/**/*.ts": ["eslint"]
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

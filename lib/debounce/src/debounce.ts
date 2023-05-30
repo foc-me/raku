@@ -18,7 +18,7 @@ const defaultOption: DebounceOption = {
 }
 
 export interface DebounceConstructorCallback {
-    new (...args: any[]): DebounceConstructorCallback
+    new (...args: any[]): any
 }
 
 export type DebounceCallback = (...args: any[]) => unknown
