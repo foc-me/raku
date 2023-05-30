@@ -1,5 +1,3 @@
-import type { SetCurrent } from "lib/createCurrent/src/createCurrent"
-
 export type FetchOption = {
     base: string
     headers: Headers
@@ -40,16 +38,15 @@ export type FetchRequestConfig = {
 }
 export type UseActionSetConfig = (next: Partial<FetchOption>) => Partial<FetchOption>
 export type UseActionConfig = Partial<FetchOption> | UseActionSetConfig
+export type FetchRequestUseAction = UseActionConfig | FetchActionRequest | FetchActionResponse
+export interface FetchRequest {
+    (option: Partial<FetchConfig>): Promise<FetchResponse>
+    useConfig: (next: UseActionConfig) => FetchRequest
+    useRequest: (callback: FetchActionRequest) => FetchRequest
+    useResponse: (callback: FetchActionResponse) => FetchRequest
+    use: (type: FetchRequestUseType, callback: FetchRequestUseAction) => FetchRequest
+}
 export type UseConfig = (next: UseActionConfig) => FetchRequest
 export type UseRequest = (callback: FetchActionRequest) => FetchRequest
 export type UseResponse = (callback: FetchActionResponse) => FetchRequest
-export type FetchRequestUseAction = UseActionConfig | FetchActionRequest | FetchActionResponse
 export type FetchRequstUse = (type: FetchRequestUseType, callback: FetchRequestUseAction) => FetchRequest
-
-export interface FetchRequest {
-    (option: Partial<FetchConfig>): Promise<FetchResponse>
-    useConfig: UseConfig
-    useRequest: UseRequest
-    useResponse: UseResponse
-    use: FetchRequstUse
-}

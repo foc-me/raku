@@ -1,5 +1,4 @@
 import type { FetchConfig, FetchOption, FetchActionRequest, FetchActionResponse, FetchResponse, UseConfig, UseRequest, UseResponse, FetchRequstUse } from "lib/request/src/refrece"
-import type { SetCurrent } from "lib/createCurrent/src/createCurrent"
 import request from "lib/request/src/request"
 
 export enum UseType {

@@ -1,4 +1,4 @@
-import type { FetchConfig, FetchOption, FetchRequest, UseConfig, UseRequest, UseResponse, FetchRequestConfig, FetchRequstUse, UseActionConfig, UseActionSetConfig, FetchActionRequest, FetchActionResponse } from "./refrece"
+import type { FetchConfig, FetchOption, FetchRequest, UseConfig, UseRequest, UseResponse, FetchRequestConfig, FetchRequstUse, UseActionConfig, FetchActionRequest, FetchActionResponse } from "./refrece"
 import { FetchRequestUseType } from "./refrece"
 import createCurrent from "lib/createCurrent/src/createCurrent"
 import is from "lib/is/src/is"
