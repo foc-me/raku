@@ -1,4 +1,4 @@
-import type { FetchConfig, FetchOption, FetchActionRequest, FetchActionResponse, FetchResponse, UseRequest, UseResponse } from "lib/request/src/request.d"
+import type { FetchConfig, FetchOption, FetchActionRequest, FetchActionResponse, FetchResponse, UseConfig, UseRequest, UseResponse, FetchRequstUse } from "lib/request/src/refrece"
 import type { SetCurrent } from "lib/createCurrent/src/createCurrent"
 import request from "lib/request/src/request"
 
@@ -10,10 +10,10 @@ export enum UseType {
 export type UseFetchAction = (type: UseType, callback: FetchActionRequest | FetchActionResponse) => unknown
 export interface CreateFetch {
     (option: Partial<FetchConfig>): Promise<FetchResponse>
-    useConfig: SetCurrent<Partial<FetchOption>>
+    useConfig: UseConfig
     useRequest: UseRequest
     useResponse: UseResponse
-    use: UseFetchAction,
+    use: FetchRequstUse,
     get: (url: string, param?: object, option?: object) => Promise<FetchResponse>
     post: (url: string, body?: object, option?: object) => Promise<FetchResponse>
     put: (url: string, body?: object, option?: object) => Promise<FetchResponse>
@@ -23,20 +23,11 @@ export interface CreateFetch {
 function createFetch(option: Partial<FetchOption>) {
     const requestFunction = request.provide(option)
 
-    const useConfig: SetCurrent<Partial<FetchOption>> = (...args) => { requestFunction.useConfig(...args) }
-    const useRequest: UseRequest = (...args) => { requestFunction.useRequest(...args) }
-    const useResponse: UseResponse = (...args) => { requestFunction.useResponse(...args) }
-    const use: UseFetchAction = (type, callback) => {
-        switch (type) {
-            case UseType.request:
-                useRequest(callback as FetchActionRequest)
-                break
-            case UseType.response:
-                useResponse(callback as FetchActionResponse)
-                break
-            default: break
-        }
-    }
+    const useConfig: UseConfig = (...args) => requestFunction.useConfig(...args)
+    const useRequest: UseRequest = (...args) => requestFunction.useRequest(...args)
+    const useResponse: UseResponse = (...args) => requestFunction.useResponse(...args)
+    const use: FetchRequstUse = (...args) => requestFunction.use(...args)
+
     const fetch: CreateFetch = (option) => {
         return requestFunction(option)
     }

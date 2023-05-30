@@ -1,4 +1,4 @@
-import type { FetchResponse } from "./request.d"
+import type { FetchResponse } from "./refrece"
 
 function makeBody(response: Response): any {
     const { body, headers } = response

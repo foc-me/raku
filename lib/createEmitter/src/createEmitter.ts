@@ -1,6 +1,6 @@
 import is from "lib/is/src/is"
 import type { EventOption } from "./createController"
-import createController, { EventType } from "./createController"
+import createController from "./createController"
 
 export type EmitterCallback = (...args: any[]) => unknown
 export type OnEmitter = (type: string, callback: EmitterCallback, option?: Partial<EventOption>) => boolean

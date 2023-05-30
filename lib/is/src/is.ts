@@ -143,27 +143,27 @@ function isNilObject(target: any): target is object {
 }
 
 function isBufferSource(target: any): target is BufferSource {
-    return target instanceof ArrayBuffer ||
-        target instanceof Int8Array ||
-        target instanceof Uint8Array ||
-        target instanceof Uint8ClampedArray ||
-        target instanceof Int16Array ||
-        target instanceof Uint16Array ||
-        target instanceof Int32Array ||
-        target instanceof Uint32Array ||
-        target instanceof Float32Array ||
-        target instanceof Float64Array ||
-        target instanceof BigInt64Array ||
-        target instanceof BigUint64Array ||
-        target instanceof DataView
+    return target instanceof ArrayBuffer
+        || target instanceof Int8Array
+        || target instanceof Uint8Array
+        || target instanceof Uint8ClampedArray
+        || target instanceof Int16Array
+        || target instanceof Uint16Array
+        || target instanceof Int32Array
+        || target instanceof Uint32Array
+        || target instanceof Float32Array
+        || target instanceof Float64Array
+        || target instanceof BigInt64Array
+        || target instanceof BigUint64Array
+        || target instanceof DataView
 }
 
 function isBodyInit(target: any): target is BodyInit {
-    return target instanceof FormData ||
-        target instanceof URLSearchParams ||
-        isBufferSource(target) ||
-        target instanceof Blob ||
-        target instanceof ReadableStream
+    return target instanceof FormData
+        || target instanceof URLSearchParams
+        || isBufferSource(target)
+        || target instanceof Blob
+        || target instanceof ReadableStream
 }
 
 is.typeOf = isTypeOf
