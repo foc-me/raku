@@ -1,4 +1,4 @@
-import type { FetchOption, FetchConfig } from "./request.d"
+import type { FetchOption, FetchConfig } from "./refrece"
 import is from "lib/is/src/is"
 
 function makeUrl(url: string, param: object | undefined, option: Partial<FetchOption>): string {
