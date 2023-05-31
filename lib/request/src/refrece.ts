@@ -1,6 +1,6 @@
 export type FetchOption = {
     base: string
-    headers: Headers
+    headers: Headers | object
 }
 
 export type FetchConfig = {
@@ -8,7 +8,7 @@ export type FetchConfig = {
     method: string
     param: object,
     body: object | BodyInit
-    headers: Headers
+    headers: Headers | object
 }
 
 export type FetchResponse = {

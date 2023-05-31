@@ -11,18 +11,32 @@ function makeUrl(url: string, param: object | undefined, option: Partial<FetchOp
     return `${target}${/\?/.test(target) ? "&" : "?"}${paramFormat}`
 }
 
-function makeHeaders(headers: Headers | undefined, option: Partial<FetchOption>): Headers | undefined {
-    if (headers && option.headers) {
-        const entries = option.headers.entries()
-        let next = entries.next()
-        while (!next.done) {
-            const [key, value] = next.value
-            headers.append(key, value)
-            next = entries.next()
-        }
-        return headers
+function mergeHeaders(source: Headers, target: Headers) {
+    const entries = source.entries()
+    let next = entries.next()
+    while (!next.done) {
+        const [key, value] = next.value
+        target.append(key, value)
+        next = entries.next()
     }
-    return headers || option.headers
+    return target
+}
+
+function mergeObjectHeaders(source: object, target: Headers) {
+    const entries = Object.entries(source)
+    for (const [key, value] of entries) {
+        target.append(key, value)
+    }
+    return target
+}
+
+function makeHeaders(source: Headers | object | undefined, target: Headers | object | undefined): Headers {
+    const nextHeaders = new Headers()
+    if (is.headers(source)) mergeHeaders(source, nextHeaders)
+    else if (is.object(source)) mergeObjectHeaders(source, nextHeaders)
+    if (is.headers(target)) mergeHeaders(target, nextHeaders)
+    else if (is.object(target)) mergeObjectHeaders(target, nextHeaders)
+    return nextHeaders
 }
 
 function makeBody(body: undefined | object | string | BodyInit): BodyInit | undefined {
@@ -33,7 +47,7 @@ function makeBody(body: undefined | object | string | BodyInit): BodyInit | unde
     } catch (e) { throw e }
 }
 
-function makeRequest(config: Partial<FetchConfig>, option: Partial<FetchOption>): Request {
+function makeRequest(config: Partial<FetchOption>, option: Partial<FetchConfig>): Request {
     const {
         url = "",
         param = undefined,
@@ -41,10 +55,9 @@ function makeRequest(config: Partial<FetchConfig>, option: Partial<FetchOption>)
         headers = undefined,
         method = "get",
         ...others
-    } = config
-
-    const localUrl = makeUrl(url, param, option)
-    const localHeaders = makeHeaders(headers, option)
+    } = option
+    const localUrl = makeUrl(url, param, config)
+    const localHeaders = makeHeaders(config.headers, headers)
     const localBody = makeBody(body)
     const bodyIsFormData = body instanceof FormData
     if (bodyIsFormData && localHeaders) {

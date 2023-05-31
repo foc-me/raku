@@ -13,7 +13,7 @@ function provide(option: Partial<FetchOption> = {}) {
     const [config, setConfig] = createCurrent<Partial<FetchRequestConfig>>({ config: copy(option) })
     const fetchRequest: FetchRequest = (option) => {
         const { config: currentConfig, request: requestCallback, response: responseCallback } = config.current
-        let request = makeRequest(option, currentConfig || {})
+        let request = makeRequest(currentConfig || {}, option)
         request = is.function(requestCallback) ? requestCallback(request) : request
         return fetch(request).then(response => {
             let result = makeResponse(response)
@@ -59,10 +59,10 @@ function provide(option: Partial<FetchOption> = {}) {
     return fetchRequest
 }
 
-function request(url: string | Partial<FetchConfig>, option: Partial<FetchConfig>) {
+function request(url: string | Partial<FetchConfig>, config: Partial<FetchConfig>) {
     const fetch = provide()
-    option = is.string(url) ? merge({}, option, { url }) : option
-    return fetch(option)
+    config = is.string(url) ? merge({}, config, { url }) : config
+    return fetch(config)
 }
 
 request.provide = provide
