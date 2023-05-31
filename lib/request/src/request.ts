@@ -1,4 +1,4 @@
-import type { FetchConfig, FetchOption, FetchRequest, UseConfig, UseRequest, UseResponse, FetchRequestConfig, FetchRequstUse, UseActionConfig, FetchActionRequest, FetchActionResponse } from "./refrece"
+import type { FetchConfig, FetchOption, FetchRequest, UseConfig, UseRequest, UseResponse, FetchRequestOption, FetchRequstUse, UseActionConfig, FetchActionRequest, FetchActionResponse } from "./refrece"
 import { FetchRequestUseType } from "./refrece"
 import createCurrent from "lib/createCurrent/src/createCurrent"
 import is from "lib/is/src/is"
@@ -10,10 +10,10 @@ import makeResponse from "./makeResponse"
 function provide(option: Partial<FetchOption> = {}) {
     if (!fetch) throw new ReferenceError("fetch is not defined")
 
-    const [config, setConfig] = createCurrent<Partial<FetchRequestConfig>>({ config: copy(option) })
+    const [localOption, setOption] = createCurrent<Partial<FetchRequestOption>>({ option: copy(option) })
     const fetchRequest: FetchRequest = (option) => {
-        const { config: currentConfig, request: requestCallback, response: responseCallback } = config.current
-        let request = makeRequest(currentConfig || {}, option)
+        const { option: currentOption, request: requestCallback, response: responseCallback } = localOption.current
+        let request = makeRequest(currentOption || {}, option)
         request = is.function(requestCallback) ? requestCallback(request) : request
         return fetch(request).then(response => {
             let result = makeResponse(response)
@@ -23,23 +23,23 @@ function provide(option: Partial<FetchOption> = {}) {
     }
 
     const useConfig: UseConfig = (next) => {
-        setConfig(prev => {
+        setOption(prev => {
             if (is.function(next)) {
-                const nextConfig = next(prev.config || {})
-                return { ...prev, config: nextConfig }
+                const nextConfig = next(prev.option || {})
+                return { ...prev, option: nextConfig }
             }
-            return { ...prev, config: next }
+            return { ...prev, option: next }
         })
         return fetchRequest
     }
 
     const useRequest: UseRequest = (request) => {
-        setConfig(prev => ({ ...prev, request }))
+        setOption(prev => ({ ...prev, request }))
         return fetchRequest
     }
 
     const useResponse: UseResponse = (response) => {
-        setConfig(prev => ({ ...prev, response }))
+        setOption(prev => ({ ...prev, response }))
         return fetchRequest
     }
 

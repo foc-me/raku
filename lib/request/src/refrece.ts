@@ -31,8 +31,8 @@ export enum FetchRequestUseType {
 }
 export type FetchActionRequest = (request: Request) => Request
 export type FetchActionResponse = (response: FetchResponse) => FetchResponse
-export type FetchRequestConfig = {
-    config: Partial<FetchOption>
+export type FetchRequestOption = {
+    option: Partial<FetchOption>
     request: FetchActionRequest
     response: FetchActionResponse
 }
@@ -40,7 +40,7 @@ export type UseActionSetConfig = (next: Partial<FetchOption>) => Partial<FetchOp
 export type UseActionConfig = Partial<FetchOption> | UseActionSetConfig
 export type FetchRequestUseAction = UseActionConfig | FetchActionRequest | FetchActionResponse
 export interface FetchRequest {
-    (option: Partial<FetchConfig>): Promise<FetchResponse>
+    (config: Partial<FetchConfig>): Promise<FetchResponse>
     useConfig: (next: UseActionConfig) => FetchRequest
     useRequest: (callback: FetchActionRequest) => FetchRequest
     useResponse: (callback: FetchActionResponse) => FetchRequest

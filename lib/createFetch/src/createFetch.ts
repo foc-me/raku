@@ -27,8 +27,8 @@ function createFetch(option: Partial<FetchOption>) {
     const useResponse: UseResponse = (...args) => requestFunction.useResponse(...args)
     const use: FetchRequstUse = (...args) => requestFunction.use(...args)
 
-    const fetch: CreateFetch = (option) => {
-        return requestFunction(option)
+    const fetch: CreateFetch = (config) => {
+        return requestFunction(config)
     }
 
     const fetchGet = (url: string, param?: object, option?: object) => {
