@@ -1,5 +1,5 @@
 const typescript = require("@rollup/plugin-typescript")
-const { uglify } = require("rollup-plugin-uglify")
+const terser = require("@rollup/plugin-terser")
 
 const compillerOption = {
     outDir: null,
@@ -15,7 +15,7 @@ module.exports = {
     ],
     plugins: [
         typescript(compillerOption),
-        uglify()
+        terser()
     ],
     watch: {
         include: ["lib/**"],

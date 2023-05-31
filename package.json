@@ -1,6 +1,6 @@
 {
   "name": "@focme/raku",
-  "version": "3.0.3",
+  "version": "3.0.3-alpha",
   "description": "a javascript utils lib",
   "main": "lib/index.js",
   "license": "MIT",
@@ -16,32 +16,32 @@
     "watch:rollup": "rollup -c --watch",
     "build": "node ./script/build",
     "build:ts": "tsc && tsc-alias",
+    "build:rollup": "rollup -c",
     "test": "jest",
     "test:watch": "jest --watch --no-coverage",
-    "lint": "eslint ./lib/**/**/*.ts"
+    "lint": "eslint ./lib/**/*.ts"
   },
   "lint-staged": {
-    "./lib/**/**/*.ts": ["eslint"]
+    "./lib/**/*.ts": [
+      "eslint"
+    ]
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.3",
     "@rollup/plugin-typescript": "^11.1.0",
     "@types/jest": "^29.5.1",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
-    "colors-console": "^1.0.3",
     "eslint": "^8.40.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "lint-staged": "^13.2.2",
     "rollup": "^3.21.5",
-    "rollup-plugin-uglify": "^6.0.4",
     "ts-jest": "^29.1.0",
     "tsc-alias": "^1.8.6",
-    "typescript": "^5.0.4",
-    "webpack": "^5.79.0",
-    "webpack-cli": "^5.0.1"
+    "typescript": "^5.0.4"
   }
 }
