@@ -166,6 +166,10 @@ function isBodyInit(target: any): target is BodyInit {
         || target instanceof ReadableStream
 }
 
+function isHeaders(target: any): target is Headers {
+    return target instanceof Headers
+}
+
 is.typeOf = isTypeOf
 is.string = isString
 is.number = isNumber
@@ -192,5 +196,6 @@ is.nativeFile = isNativeFile
 is.nativeSubject = isNativeSubject
 is.nativeSetMap = isNativeSetMap
 is.bodyInit = isBodyInit
+is.headers = isHeaders
 
 export default is
