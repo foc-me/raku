@@ -1,12 +1,6 @@
 const typescript = require("@rollup/plugin-typescript")
 const terser = require("@rollup/plugin-terser")
 
-const compillerOption = {
-    outDir: null,
-    declaration: false,
-    declarationDir: null
-}
-
 module.exports = {
     input: "./lib/index.ts",
     output: [
@@ -14,7 +8,11 @@ module.exports = {
         { dir: "./dist/dist", format: "umd", name: "raku" }
     ],
     plugins: [
-        typescript(compillerOption),
+        typescript({
+            outDir: null,
+            declaration: false,
+            declarationDir: null
+        }),
         terser()
     ],
     watch: {
