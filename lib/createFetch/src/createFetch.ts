@@ -22,11 +22,6 @@ export interface CreateFetch {
 function createFetch(option: Partial<FetchOption>) {
     const requestFunction = request.provide(option)
 
-    const useConfig: UseConfig = (...args) => requestFunction.useConfig(...args)
-    const useRequest: UseRequest = (...args) => requestFunction.useRequest(...args)
-    const useResponse: UseResponse = (...args) => requestFunction.useResponse(...args)
-    const use: FetchRequstUse = (...args) => requestFunction.use(...args)
-
     const fetch: CreateFetch = (config) => {
         return requestFunction(config)
     }
@@ -42,6 +37,23 @@ function createFetch(option: Partial<FetchOption>) {
     }
     const fetchDelete = (url: string, param?: object, option?: object) => {
         return fetch({ url, method: "delete", param, ...(option || {}) })
+    }
+
+    const useConfig: UseConfig = (...args) => {
+        requestFunction.useConfig(...args)
+        return fetch
+    }
+    const useRequest: UseRequest = (...args) => {
+        requestFunction.useRequest(...args)
+        return fetch
+    }
+    const useResponse: UseResponse = (...args) => {
+        requestFunction.useResponse(...args)
+        return fetch
+    }
+    const use: FetchRequstUse = (...args) => {
+        requestFunction.use(...args)
+        return fetch
     }
 
     fetch.useConfig = useConfig
